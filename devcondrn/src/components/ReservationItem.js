@@ -40,7 +40,7 @@ const DateItem = styled.Text`
 
 export default ({data}) => {
     const navigation = useNavigation();
-
+    console.log(data);
     const handleClick = () => {
         navigation.navigate('ReservationAddScreen', {data});
     };
@@ -49,7 +49,8 @@ export default ({data}) => {
         <Box onPress={handleClick}>
             <CoverImage source={{uri: data.cover}} resizeMode="cover" />
             <Title>{data.title}</Title>
-            <DateText>Horários de funcionamento:</DateText>
+            <DateText>Horários de funcionamento: </DateText>
+
             {data.dates.map((item, index) => (
                 <DateItem key={index}>{item}</DateItem>
             ))}

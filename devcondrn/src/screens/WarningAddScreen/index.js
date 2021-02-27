@@ -22,6 +22,7 @@ export default () => {
         navigation.setOptions({
             headerTitle: 'Adicionar uma Ocorrência',
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleAddPhoto = async () => {

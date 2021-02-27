@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable quotes */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -162,9 +163,119 @@ export default {
             'get',
             `/reservation/${id}/disableddates`,
             {},
-            token,
+            token
         );
 
         return json;
+    // eslint-disable-next-line comma-dangle
+    },
+
+    getReservationTimes: async (id, date) => {
+        let token = await AsyncStorage.getItem('token');
+        let json = await request(
+            'get',
+            `/reservation/${id}/times`,
+            {date},
+            token
+        );
+
+        return json;
+    },
+    setReservation: async (id, date, time) => {
+        let token = await AsyncStorage.getItem('token');
+
+        let property = await AsyncStorage.getItem('property');
+        property = JSON.parse(property);
+        let json = await request(
+            'post',
+            `/reservation/${id}`,
+            {
+                date,
+                time,
+                property: property.id,
+            },
+            // eslint-disable-next-line prettier/prettier
+            token
+        );
+        return json;
+    },
+    getMyReservations: async () => {
+        let token = await AsyncStorage.getItem('token');
+        let property = await AsyncStorage.getItem('property');
+        property = JSON.parse(property);
+        let json = await request('get', '/myreservations', {
+            property: property.id,
+        }, token);
+      return json;
+    },
+    removeReservation: async (id) => {
+        let token = await AsyncStorage.getItem('token');
+        let json = await request('delete', `/myreservation/${id}`, {}, token);
+        return json;
+    },
+    getFoundAndLost: async () => {
+        let token = await AsyncStorage.getItem('token');
+        let json = await request('get', `/foundandlost`, {}, token);
+        return json;
+    },
+
+    setRecovered: async (id) => {
+        let token = await AsyncStorage.getItem('token');
+        let json = await request('put', `/foundandlost/${id}`, {
+            status: 'recovered',
+        }, token);
+        return json;
+    },
+
+    AddLostItem: async (photo, description, where) => {
+        let token = await AsyncStorage.getItem('token');
+        let formData = new FormData();
+         formData.append('description', description);
+         formData.append('where', where);
+         formData.append('photo', {
+              uri: photo.uri,
+              type: photo.type,
+              name: photo.fileName,
+         });
+         let req = await fetch(`${baseUrl}/foundandlost`, {
+              method: 'POST',
+              headers: {
+                   'Content-Type': 'multipart/form-data',
+                   'Authorization': `Bearer ${token}`,
+              },
+              body: formData,
+         });
+         let json = await req.json();
+         return json;
+    },
+
+    getUnitInfo: async () => {
+        let token = await AsyncStorage.getItem('token');
+        let property = await AsyncStorage.getItem('property');
+        property = JSON.parse(property);
+
+        let json = await request('get', `/unit/${property.id}`, {}, token);
+        return json;
+    },
+
+    removeUnitItem: async (type, id) => {
+        let token = await AsyncStorage.getItem('token');
+        let property = await AsyncStorage.getItem('property');
+        property = JSON.parse(property);
+
+        let json = await request('post', `/unit/${property.id}/remove${type}`, {
+             id,
+        }, token);
+        return json;
+
+    },
+    addUnitItem: async (type, body) => {
+        let token = await AsyncStorage.getItem('token');
+        let property = await AsyncStorage.getItem('property');
+        property = JSON.parse(property);
+
+
+        let json = await request('post', `/unit/${property.id}/add${type}`, body, token);
+       return json;
     },
 };

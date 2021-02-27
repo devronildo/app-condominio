@@ -1,6 +1,6 @@
+/* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import s from './style';
 import {useStateValue} from '../../contexts/stateContext';
 
@@ -37,18 +37,18 @@ export default () => {
     return (
         <s.Container>
             <s.Scroller contentContainerStyle={{paddingBottom: 40}}>
-                <s.ButtonArea onPress={null}>
+                <s.ButtonArea onPress={() => navigation.navigate('ReservationMyScreen')}>
                     <s.ButtonText>Minhas Reservas</s.ButtonText>
                 </s.ButtonArea>
                 <s.Title>Selecione uma Área</s.Title>
 
                 {loading && <s.LoadingIcon size="large" color="#2d3251" />}
 
-                {!loading && list.length === 0 && (
+                {!loading && list.length === 0 &&
                     <s.NoListArea>
                         <s.NoListText>Não há áreas disponiveis</s.NoListText>
                     </s.NoListArea>
-                )}
+                 }
 
                 {list.map((item, index) => (
                     <ReservationItem key={index} data={item} />
