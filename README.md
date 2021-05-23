@@ -15,18 +15,15 @@
 
 -- projeto para facilitar a vida dos moradores e proprietário do condominio.
 
-Tecnologias utilizadas neste projeto:
-
-
 🚀 Este projeto foi desenvolvido com as seguintes tecnologias:
 
-. PHP
-. FRAMEWORK LARAVEL
-. REACT NATIVE
-. MYSQL
-. JAVASCRIPT
-. API
-. CONTEXT API
+* PHP
+* FRAMEWORK LARAVEL
+* REACT NATIVE
+* MYSQL
+* JAVASCRIPT
+* API
+* CONTEXT API
 
 🚀 Ao clonar este projeto digite os seguintes comandos
 
